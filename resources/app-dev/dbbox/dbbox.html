@@ -9,6 +9,7 @@
         width: 400px;
         height: 240px;
         border: 1px solid #2d2d2d;
+        font-size: 0;
         font-family: "futuraBook";
       }
 
@@ -16,9 +17,6 @@
       {
         margin: 0;
         color: white;
-        font-size: 23px;
-        box-sizing: border-box;
-        margin-left: 10px;
       }
 
       #name-bar
@@ -31,16 +29,23 @@
 
       #name-bar p
       {
-        padding-left: 10px;
+        font-size: 23px;
+        box-sizing: border-box;
+        padding-left: 15px;
         padding-top: 3px;
         padding-bottom: 3px;
       }
 
-      #img-box
+      .content-box
       {
         display: inline-block;
+        vertical-align: top;
         width: 200px;
         height: 200px;
+      }
+
+      #img-box
+      {
         overflow: hidden;
         background-color: black;
       }
@@ -55,14 +60,38 @@
         height: auto;
         width: 100%;
       }
+
+      #info-box
+      {
+        padding: 15px;
+        box-sizing: border-box;
+      }
+
+      #info-box p
+      {
+        display: inline-block;
+        padding: 1px 5px 1px 5px;
+        margin: 0 5px 3px 0;
+        font-family: "Segoe UI";
+        font-size: 18px;
+        text-transform: uppercase;
+        background-color: #063da4;
+        border-radius: 2px;
+      }
     </style>
 
     <div id="name-bar">
       <p>[[name]]</p>
     </div>
 
-    <div id="img-box">
+    <div id="img-box" class="content-box">
       <img id="img-box-img" src="[[img]]">
+    </div>
+
+    <div id="info-box" class="content-box">
+      <p>tag1</p>
+      <p>tag2</p>
+      <p>very very very very long tag</p>
     </div>
 
   </template>
@@ -80,7 +109,8 @@
         return {
           name: String,
           img: String,
-          wide: {type: Boolean,observer: "imgWide"}
+          wide: {type: Boolean,observer: "imgWide"},
+          tags: Array
         };
       }
 

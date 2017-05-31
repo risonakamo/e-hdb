@@ -9,7 +9,7 @@ function main()
 
 function genTest()
 {
-    var boxes=[{name:"hello",img:"http://i.imgur.com/HxIGGIS.jpg"}];
+    var boxes=[{name:"hello",img:"http://i.imgur.com/HxIGGIS.jpg",tags:["tage1","tag3",]}];
 
     var boxinsert=document.querySelector(".db-boxes");
     var a=new dbBox();
