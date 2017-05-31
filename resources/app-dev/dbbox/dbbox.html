@@ -1,0 +1,88 @@
+<link rel="import" href="../polymer/polymer/polymer.html">
+
+<dom-module id="db-box">
+  <template>
+    <style>
+      :host
+      {
+        display: inline-block;
+        width: 400px;
+        height: 240px;
+        border: 1px solid #2d2d2d;
+        font-family: "futuraBook";
+      }
+
+      p
+      {
+        margin: 0;
+        color: white;
+        font-size: 23px;
+        box-sizing: border-box;
+        margin-left: 10px;
+      }
+
+      #name-bar
+      {
+        width: 100%;
+        min-height: 40px;
+        box-sizing: content-box;
+        background-color: #2d2d2d;
+      }
+
+      #name-bar p
+      {
+        padding-left: 10px;
+        padding-top: 3px;
+        padding-bottom: 3px;
+      }
+
+      #img-box
+      {
+        display: inline-block;
+        width: 200px;
+        height: 200px;
+        overflow: hidden;
+        background-color: black;
+      }
+
+      #img-box img
+      {
+        height: 100%;
+      }
+
+      #img-box img.wide
+      {
+        height: auto;
+        width: 100%;
+      }
+    </style>
+
+    <div id="name-bar">
+      <p><slot name="name"></slot></p>
+    </div>
+
+    <div id="img-box">
+      <img src="http://i.imgur.com/HxIGGIS.jpg">
+    </div>
+
+  </template>
+
+  <script>
+    class dbBox extends Polymer.Element
+    {
+      static get is()
+      {
+        return "db-box";
+      }
+
+      static get properties()
+      {
+        return {
+
+        };
+      }
+    }
+
+    customElements.define(dbBox.is,dbBox);
+  </script>
+</dom-module>
