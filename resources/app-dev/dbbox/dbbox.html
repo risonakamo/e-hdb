@@ -58,11 +58,11 @@
     </style>
 
     <div id="name-bar">
-      <p><slot name="name"></slot></p>
+      <p>[[name]]</p>
     </div>
 
     <div id="img-box">
-      <img src="http://i.imgur.com/HxIGGIS.jpg">
+      <img id="img-box-img" src="[[img]]">
     </div>
 
   </template>
@@ -78,8 +78,15 @@
       static get properties()
       {
         return {
-
+          name: String,
+          img: String,
+          wide: {type: Boolean,observer: "imgWide"}
         };
+      }
+
+      imgWide(e)
+      {
+        this.$["img-box-img"].classList.add("wide");
       }
     }
 
