@@ -10,6 +10,13 @@ function main()
                 type:"nope"}];
 
     genBoxes(boxes);
+
+    var eraw=document.querySelector(".expand-raw");
+    var opbox=document.querySelector(".op-box");
+
+    eraw.addEventListener("click",(e)=>{
+        opbox.classList.toggle("collapse");
+    });
 }
 
 function genBoxes(data)

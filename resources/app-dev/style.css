@@ -8,7 +8,7 @@
 
 body
 {
-    margin: 10px;
+    margin: 0;
     background-color: #222222;
     font-family: "futuraBook";
     color: white;
@@ -21,7 +21,14 @@ p
 
 .top-menu
 {
-    height: 100px;
+    min-height: 100px;
+    margin-bottom: 30px;
+}
+
+.button-hold
+{
+    display: block;
+    padding: 10px;
 }
 
 .top-button
@@ -35,11 +42,53 @@ p
     border-radius: 1px;
     font-size: 15px;
     cursor: pointer;
-    transition: background-color .1s;
+    transition: background-color,border-color .1s,.1s;
     user-select: none;
 }
 
 .top-button:hover
 {
     background-color:#5e5d59;
+    border-color: white;
+}
+
+.op-box
+{
+    display: inline-block;
+    vertical-align: top;
+    height: 300px;
+    width: 100%;
+    background-color: #191919;
+    box-sizing: border-box;
+    overflow: hidden;
+    transition: all 1s;
+}
+
+.op-box.collapse
+{
+    height: 0;
+}
+
+.raw-input
+{
+    width: 600px;
+    height: 250px;
+    resize: none;
+    background-color: #211e19;
+    color: white;
+    font-size: 15px;
+    font-family: "Segoe Ui";
+    border: 1px solid #9c9992;
+    border-radius: 1px;
+    margin: 20px;
+}
+
+.raw-input:hover
+{
+    border-color: white;
+}
+
+.raw-input:focus
+{
+    outline: none;
 }
