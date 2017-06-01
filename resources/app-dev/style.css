@@ -10,4 +10,36 @@ body
 {
     margin: 10px;
     background-color: #222222;
+    font-family: "futuraBook";
+    color: white;
+}
+
+p
+{
+    margin: 0;
+}
+
+.top-menu
+{
+    height: 100px;
+}
+
+.top-button
+{
+    display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    padding: 3px 12px 3px 12px;
+    background-color: #1d1c1a;
+    border: 1px solid #9c9992;
+    border-radius: 1px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: background-color .1s;
+    user-select: none;
+}
+
+.top-button:hover
+{
+    background-color:#5e5d59;
 }

@@ -6,7 +6,8 @@ function main()
 {
     var boxes=[{name:"hello",
                 img:"http://i.imgur.com/eOuukmp.png",
-                tags:["tage1","tag3",]}];
+                tags:["tage1","tag3",],
+                type:"nope"}];
 
     genBoxes(boxes);
 }
