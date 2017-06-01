@@ -34,6 +34,7 @@ p
 .top-button
 {
     display: inline-block;
+    vertical-align: top;
     height: 30px;
     line-height: 30px;
     padding: 3px 12px 3px 12px;
@@ -91,4 +92,9 @@ p
 .raw-input:focus
 {
     outline: none;
+}
+
+.highlight-green
+{
+    background-color: green;
 }

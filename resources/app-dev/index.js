@@ -17,6 +17,8 @@ function main()
     eraw.addEventListener("click",(e)=>{
         opbox.classList.toggle("collapse");
     });
+
+    parseRaw();
 }
 
 function genBoxes(data)
@@ -38,4 +40,16 @@ function genBoxes(data)
 
         ipoint.appendChild(newbox);
     }
+}
+
+function parseRaw()
+{
+    var pbutton=document.querySelector(".parse-raw");
+    var inputbox=document.querySelector(".raw-input");
+
+    pbutton.addEventListener("click",(e)=>{
+        var data=inputbox.value.split("\n");
+
+        console.log(data);
+    });
 }
