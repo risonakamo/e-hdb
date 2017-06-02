@@ -3,7 +3,8 @@ const {Menu,MenuItem}=remote;
 var datastore=require("nedb");
 
 var db=new datastore({filename:"db.db",autoload:true});
-var curId;
+var curId; //last id for updates
+var allTags;
 
 //context menu for db box
 var deleteBox;
@@ -30,7 +31,7 @@ function main()
     opBox();
     parseRaw();
     loadAll();
-    getId();
+    getDbMeta();
 }
 
 //setup for op box
@@ -113,6 +114,20 @@ function parseRaw()
 
                 case 4:
                     ne.tags=data[x].split(",");
+
+                    for (var y=0;y<ne.tags.length;y++)
+                    {
+                        if (allTags[ne.tags[y]]==undefined)
+                        {
+                            allTags[ne.tags[y]]=0;
+                        }
+
+                        else
+                        {
+                            allTags[ne.tags[y]]++;
+                        }
+                    }
+
                     break;
 
                 case 5:
@@ -127,6 +142,7 @@ function parseRaw()
 
         genBoxes(parsedData);
         db.update({meta:"id"},{$set:{cur:curId}},{});
+        db.update({meta:"alltags"},{$set:{"allTags":allTags}},{});
     });
 }
 
@@ -152,7 +168,7 @@ function boxEvents()
 //load all boxes
 function loadAll()
 {
-    db.find({meta:{$ne:"id"}},(err,res)=>{
+    db.find({$and:[{meta:{$ne:"id"}},{meta:{$ne:"alltags"}}]},(err,res)=>{
         if (res!=undefined)
         {
             genBoxes(res);
@@ -191,17 +207,27 @@ function arrayPick(array,size)
 }
 
 //retrive current id from databse or initialise
-function getId()
+function getDbMeta()
 {
     db.find({meta:"id"},(err,res)=>{
         if (res==undefined || res.length==0)
         {
             db.insert({meta:"id",cur:0});
             curId=0;
-            console.log(curId);
             return;
         }
 
         curId=res[0].cur;
+    });
+
+    db.find({meta:"alltags"},(err,res)=>{
+        if (res==undefined || res.length==0)
+        {
+            db.insert({meta:"alltags"});
+            allTags={};
+            return;
+        }
+        
+        allTags=res[0].allTags;
     });
 }
