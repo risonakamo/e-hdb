@@ -7,6 +7,7 @@
     -bool wide: set to make image set width-wise
     -string array tags: array of strings for tags
     -string type: goes in bottom type box
+    -string link: link when clicking on box
 -->
 
 <dom-module id="db-box">
@@ -21,12 +22,18 @@
         font-size: 0;
         font-family: "futuraBook";
         overflow: hidden;
+        margin: 10px;
       }
 
       p
       {
         margin: 0;
         color: white;
+      }
+
+      a
+      {
+        text-decoration: none;
       }
 
       #name-bar
@@ -57,7 +64,7 @@
       #img-box
       {
         overflow: hidden;
-        background-color: black;
+        text-align: center;
       }
 
       #img-box img
@@ -83,10 +90,10 @@
       #tag-box p
       {
         display: inline-block;
-        padding: 1px 5px 1px 5px;
+        padding: 2px 6px 2px 6px;
         margin: 0 5px 3px 0;
         font-family: "Segoe UI";
-        font-size: 18px;
+        font-size: 16px;
         text-transform: uppercase;
         background-color: #063da4;
         border-radius: 2px;
@@ -115,25 +122,28 @@
       }
     </style>
 
-    <div id="name-bar">
-      <p>[[name]]</p>
-    </div>
-
-    <div id="img-box" class="content-box">
-      <img id="img-box-img" src="[[img]]">
-    </div>
-
-    <div id="info-box" class="content-box">
-      <div id="tag-box">
-        
+    <a href="[[link]]">
+      <div id="name-bar">
+        <p>[[name]]</p>
       </div>
 
-      <div id="type-box">
-        <div class="line-box">
-          <p>[[type]]</p>
+      <div id="img-box" class="content-box">
+        <img id="img-box-img" src="[[img]]">
+      </div>
+
+      <div id="info-box" class="content-box">
+        <div id="tag-box">
+          
+        </div>
+
+        <div id="type-box">
+          <div class="line-box">
+            <p>[[type]]</p>
+          </div>
         </div>
       </div>
-    </div>
+    </a>
+
 
   </template>
 
@@ -152,7 +162,8 @@
           img: String,
           wide: {type: Boolean,observer: "imgWide"},
           tags: {type: Array,observer: "parseTags"},
-          type: String
+          type: String,
+          link: String
         };
       }
 

@@ -21,6 +21,8 @@ function main()
     parseRaw();
 }
 
+//generate and add boxes
+//requires array of objects
 function genBoxes(data)
 {
     var ipoint=document.querySelector(".db-boxes");
@@ -32,6 +34,7 @@ function genBoxes(data)
         newbox.img=data[x].img;
         newbox.tags=data[x].tags;
         newbox.type=data[x].type;
+        newbox.link=data[x].link;
 
         if (data[x].wide!=undefined)
         {
@@ -49,7 +52,44 @@ function parseRaw()
 
     pbutton.addEventListener("click",(e)=>{
         var data=inputbox.value.split("\n");
+        var parsedData=[];
 
-        console.log(data);
+        var ne;
+        var i=0;
+        for (var x=0;x<data.length;x++)
+        {
+            switch (i)
+            {
+                case 0:
+                    ne={};
+                    ne.name=data[x];
+                    break;
+                
+                case 1:
+                    ne.type=data[x];
+                    break;
+
+                case 2:
+                    ne.img=data[x];
+                    break;
+
+                case 3:
+                    ne.link=data[x];
+                    break;
+
+                case 4:
+                    ne.tags=data[x].split(",");
+                    break;
+
+                case 5:
+                    parsedData.push(ne);
+                    i=-1;
+                    break;
+            }
+
+            i++;
+        }
+
+        genBoxes(parsedData.slice(1));
     });
 }
