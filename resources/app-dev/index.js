@@ -1,4 +1,18 @@
-const {ipcRenderer}=require("electron");
+const {remote,shell}=require("electron");
+const {Menu,MenuItem}=remote;
+
+var deleteBox;
+
+const boxMenu=new Menu();
+boxMenu.append(new MenuItem({label:"delete",click(){
+    deleteBox.parentNode.removeChild(deleteBox);
+
+    //insert code for remove from database here
+}}));
+
+// window.addEventListener("contextmenu",(e)=>{
+//     menu.popup(remote.getCurrentWindow());
+// });
 
 window.onload=main;
 
@@ -7,7 +21,8 @@ function main()
     var boxes=[{name:"hello",
                 img:"http://i.imgur.com/eOuukmp.png",
                 tags:["tage1","tag3",],
-                type:"nope"}];
+                type:"nope",
+                id:3222}];
 
     genBoxes(boxes);
 
@@ -35,6 +50,7 @@ function genBoxes(data)
         newbox.tags=data[x].tags;
         newbox.type=data[x].type;
         newbox.link=data[x].link;
+        newbox.id=data[x].id;
 
         if (data[x].wide!=undefined)
         {
@@ -43,6 +59,8 @@ function genBoxes(data)
 
         ipoint.appendChild(newbox);
     }
+
+    boxEvents();
 }
 
 function parseRaw()
@@ -92,4 +110,22 @@ function parseRaw()
 
         genBoxes(parsedData.slice(1));
     });
+}
+
+function boxEvents()
+{
+    var boxes=document.querySelectorAll("db-box");
+
+    for (var x=0;x<boxes.length;x++)
+    {
+        boxes[x].addEventListener("contextmenu",(e)=>{
+            deleteBox=e.target;
+            boxMenu.popup(remote.getCurrentWindow());
+        });
+
+        boxes[x].addEventListener("click",(e)=>{
+            e.preventDefault();
+            shell.openExternal(e.target.link);
+        });
+    }
 }

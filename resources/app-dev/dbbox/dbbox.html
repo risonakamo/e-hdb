@@ -8,6 +8,7 @@
     -string array tags: array of strings for tags
     -string type: goes in bottom type box
     -string link: link when clicking on box
+    -int id: id of box shows up in corner
 -->
 
 <dom-module id="db-box">
@@ -158,7 +159,7 @@
       </div>
 
       <div id="id-box">
-        [[id]]
+        #[[id]]
       </div>
     </a>
 
@@ -181,7 +182,8 @@
           wide: {type: Boolean,observer: "imgWide"},
           tags: {type: Array,observer: "parseTags"},
           type: String,
-          link: String
+          link: String,
+          id: Number
         };
       }
 
