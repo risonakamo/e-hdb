@@ -4,30 +4,29 @@ var datastore=require("nedb");
 
 var db=new datastore({filename:"db.db",autoload:true});
 var curId; //last id for updates
-var allTags;
+var allTags; //tags tracker
 
 //context menu for db box
-var deleteBox;
+var selectedBox;
 const boxMenu=new Menu();
 boxMenu.append(new MenuItem({label:"delete",click(){
-    deleteBox.parentNode.removeChild(deleteBox);
+    selectedBox.parentNode.removeChild(selectedBox);
 
     //insert code for remove from database here
-    db.remove({id:deleteBox.id},{});
+    db.remove({id:selectedBox.id},{});
 }}));
+
+boxMenu.append(new MenuItem({
+    label:"edit",
+    click(){
+        selectedBox.editMode=1;
+    }
+}));
 
 window.onload=main;
 
 function main()
 {
-    // var boxes=[{name:"hello",
-    //             img:"http://i.imgur.com/eOuukmp.png",
-    //             tags:["tage1","tag3",],
-    //             type:"nope",
-    //             id:3222}];
-
-    // genBoxes(boxes);
-
     opBox();
     parseRaw();
     loadAll();
@@ -154,12 +153,11 @@ function boxEvents()
     for (var x=0;x<boxes.length;x++)
     {
         boxes[x].addEventListener("contextmenu",(e)=>{
-            deleteBox=e.target;
+            selectedBox=e.target;
             boxMenu.popup(remote.getCurrentWindow());
         });
 
-        boxes[x].addEventListener("click",(e)=>{
-            e.preventDefault();
+        boxes[x].addEventListener("linkclick",(e)=>{
             shell.openExternal(e.target.link);
         });
     }
