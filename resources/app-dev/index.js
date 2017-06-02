@@ -1,8 +1,15 @@
 const {remote,shell}=require("electron");
 const {Menu,MenuItem}=remote;
+var datastore=require("nedb");
 
+var db=new datastore({filename:"db.db",autoload:true});
+
+db.find({},(err,res)=>{
+    console.log(res);
+});
+
+//context menu for db box
 var deleteBox;
-
 const boxMenu=new Menu();
 boxMenu.append(new MenuItem({label:"delete",click(){
     deleteBox.parentNode.removeChild(deleteBox);
@@ -10,30 +17,32 @@ boxMenu.append(new MenuItem({label:"delete",click(){
     //insert code for remove from database here
 }}));
 
-// window.addEventListener("contextmenu",(e)=>{
-//     menu.popup(remote.getCurrentWindow());
-// });
-
 window.onload=main;
 
 function main()
 {
-    var boxes=[{name:"hello",
-                img:"http://i.imgur.com/eOuukmp.png",
-                tags:["tage1","tag3",],
-                type:"nope",
-                id:3222}];
+    // var boxes=[{name:"hello",
+    //             img:"http://i.imgur.com/eOuukmp.png",
+    //             tags:["tage1","tag3",],
+    //             type:"nope",
+    //             id:3222}];
 
-    genBoxes(boxes);
+    // genBoxes(boxes);
 
+    opBox();
+    parseRaw();
+    loadAll();
+}
+
+//setup for op box
+function opBox()
+{
     var eraw=document.querySelector(".expand-raw");
     var opbox=document.querySelector(".op-box");
 
     eraw.addEventListener("click",(e)=>{
         opbox.classList.toggle("collapse");
     });
-
-    parseRaw();
 }
 
 //generate and add boxes
@@ -63,6 +72,7 @@ function genBoxes(data)
     boxEvents();
 }
 
+//set up parse raw old system
 function parseRaw()
 {
     var pbutton=document.querySelector(".parse-raw");
@@ -101,6 +111,7 @@ function parseRaw()
 
                 case 5:
                     parsedData.push(ne);
+                    db.insert(ne);
                     i=-1;
                     break;
             }
@@ -112,6 +123,7 @@ function parseRaw()
     });
 }
 
+//setup events for db boxes
 function boxEvents()
 {
     var boxes=document.querySelectorAll("db-box");
@@ -128,4 +140,16 @@ function boxEvents()
             shell.openExternal(e.target.link);
         });
     }
+}
+
+function loadAll()
+{
+    db.find({},(err,res)=>{
+        genBoxes(res);
+    });
+}
+
+function shuffle()
+{
+    
 }
