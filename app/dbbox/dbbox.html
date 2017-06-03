@@ -279,7 +279,7 @@
           </div>
         </div>
 
-        <div id="edit-box">
+        <div on-keypress="doUpdateKey" id="edit-box">
           <div class="edit-cell light"><div class="cell-name">name</div><textarea>[[name]]</textarea></div>
           <div class="edit-cell"><div class="cell-name">type</div><textarea>[[type]]</textarea></div>
           <div class="edit-cell light"><div class="cell-name">img</div><textarea>[[img]]</textarea></div>
@@ -366,29 +366,37 @@
       {
         var newData=this.$["edit-box"].querySelectorAll("textarea");
 
-        for (var x=0;x<newData.length;x++)
+        var dbData={id:this.id};
+
+        this.name=newData[0].value;
+        dbData.name=newData[0].value;
+
+        this.type=newData[1].value;
+        dbData.type=newData[1].value;
+
+        this.img=newData[2].value;
+        dbData.img=newData[2].value;
+
+        this.link=newData[3].value;
+        dbData.link=newData[3].value;
+
+        var ntags=newData[4].value.split(",");
+        this.tags=ntags;
+        dbData.tags=ntags;
+
+        this.dispatchEvent(new CustomEvent("updated",{detail:dbData}));
+        this.closeEdit();
+      }
+
+      doUpdateKey(e)
+      {
+        if (e.key!="Enter")
         {
-          switch (x)
-          {
-            case 0:
-              this.name=newData[x].value;
-              break;
-            case 1:
-              this.type=newData[x].value;
-              break;
-            case 2:
-              this.img=newData[x].value;
-              break;
-            case 3:
-              this.link=newData[x].value;
-              break;
-            case 4:
-              this.tags=newData[x].value.split(",");
-              break;
-          }
+          return;
         }
 
-        this.closeEdit();
+        e.preventDefault();
+        this.doUpdate();
       }
 
       closeEdit(e)

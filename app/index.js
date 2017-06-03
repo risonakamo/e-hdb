@@ -160,6 +160,10 @@ function boxEvents()
         boxes[x].addEventListener("linkclick",(e)=>{
             shell.openExternal(e.target.link);
         });
+
+        boxes[x].addEventListener("updated",(e)=>{
+            db.update({id:e.detail.id},e.detail,{});
+        });
     }
 }
 
