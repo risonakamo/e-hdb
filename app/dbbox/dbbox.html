@@ -39,6 +39,11 @@
         text-decoration: none;
       }
 
+      a:focus
+      {
+        outline: none;
+      }
+
       #name-bar
       {
         width: 100%;
@@ -260,7 +265,7 @@
       }
     </style>
 
-    <a on-click="linkclick" href="[[link]]">
+    <a on-click="linkclick" href="[[link]]" tabindex="-1">
       <div id="name-bar">
         <p>[[name]]</p>
       </div>
@@ -290,11 +295,11 @@
         </div>
 
         <div on-keypress="doUpdateKey" id="edit-box">
-          <div class="edit-cell light"><div class="cell-name">name</div><textarea>[[name]]</textarea></div>
-          <div class="edit-cell"><div class="cell-name">type</div><textarea>[[type]]</textarea></div>
-          <div class="edit-cell light"><div class="cell-name">img</div><textarea>[[img]]</textarea></div>
-          <div class="edit-cell"><div class="cell-name">link</div><textarea>[[link]]</textarea></div>
-          <div class="edit-cell light"><div class="cell-name">tags</div><textarea id="edit-tags"></textarea></div>
+          <div class="edit-cell light"><div class="cell-name">name</div><textarea tabindex$="[[tabIndexEnable]]">[[name]]</textarea></div>
+          <div class="edit-cell"><div class="cell-name">type</div><textarea tabindex$=[[tabIndexEnable]]>[[type]]</textarea></div>
+          <div class="edit-cell light"><div class="cell-name">img</div><textarea tabindex$=[[tabIndexEnable]]>[[img]]</textarea></div>
+          <div class="edit-cell"><div class="cell-name">link</div><textarea tabindex$=[[tabIndexEnable]]>[[link]]</textarea></div>
+          <div class="edit-cell light"><div class="cell-name">tags</div><textarea id="edit-tags" tabindex$=[[tabIndexEnable]]></textarea></div>
           <div class="edit-cell">
             <div on-click="doUpdate" class="edit-submit-bt bt">Update</div>
             <div on-click="closeEdit" class="cancel-bt bt">Cancel</div>
@@ -324,7 +329,8 @@
           type: String,
           link: String,
           id: Number,
-          editMode: {type: Boolean,observer: "enableEdit"}
+          editMode: {type: Boolean,observer: "enableEdit"},
+          tabIndexEnable: {type:Number,value:-1}
         };
       }
 
@@ -364,6 +370,7 @@
           return;
         }
 
+        this.tabIndexEnable=0;
         this.disableLink=1;
         this.$["bot-content-content"].classList.add("contentSlide");
 
@@ -411,6 +418,7 @@
 
       closeEdit(e)
       {
+        this.tabIndexEnable=-1;
         this.editMode=0;
         this.$["bot-content-content"].classList.remove("contentSlide");
         this.$["edit-box"].classList.remove("contentSlide");
