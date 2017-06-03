@@ -33,19 +33,25 @@ function main()
     getDbMeta();
 }
 
-//setup for op box
+//setup for op box(es)
 function opBox()
 {
     var eraw=document.querySelector(".expand-raw");
-    var opbox=document.querySelector(".op-box");
+    var rawopbox=document.querySelector(".raw-box");
     var shuffleButton=document.querySelector(".shuffle");
+    var searchBt=document.querySelector(".search-bt");
+    var searchOpBox=document.querySelector(".search-op");
 
     eraw.addEventListener("click",(e)=>{
-        opbox.classList.toggle("collapse");
+        rawopbox.classList.toggle("collapse");
     });
 
     shuffleButton.addEventListener("click",(e)=>{
         shuffle();
+    });
+
+    searchBt.addEventListener("click",(e)=>{
+        searchOpBox.classList.toggle("collapse");
     });
 }
 
