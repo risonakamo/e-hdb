@@ -1,0 +1,33 @@
+<link rel="import" href="../polymer/polymer/polymer.html">
+
+<dom-module id="tag-box">
+  <template>
+    <style>
+      :host
+      {
+        
+      }
+    </style>
+
+
+  </template>
+
+  <script>
+    class tagBox extends Polymer.Element
+    {
+      static get is()
+      {
+        return "tag-box";
+      }
+
+      static get properties()
+      {
+        return {
+          tags: Array
+        };
+      }
+    }
+
+    customElements.define(tagBox.is,tagBox);
+  </script>
+</dom-module>
