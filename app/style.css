@@ -73,15 +73,15 @@ p
 .input-holder
 {
     width: 600px;
-    border: 1px solid white;
+    border: 1px solid #9c9992;
     border-radius: 1px;
     font-size: 0;
     overflow: hidden;
 }
 
-.input-holder:hover
+.input-holder:hover,.input-holder:focus
 {
-    border-color: white;    
+    border-color: #e6e6e6;
 }
 
 .raw-input

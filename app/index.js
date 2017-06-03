@@ -237,5 +237,8 @@ function getDbMeta()
         }
         
         allTags=res[0].allTags;
+
+        var tagSearch=document.querySelector("tag-box");
+        tagSearch.tags=allTags;
     });
 }
