@@ -76,6 +76,8 @@ function genBoxes(data)
             newbox.wide=1;
         }
 
+        newbox.classList.add("new");
+
         ipoint.appendChild(newbox);
     }
 
@@ -154,20 +156,26 @@ function parseRaw()
 //setup events for db boxes
 function boxEvents()
 {
-    var boxes=document.querySelectorAll("db-box");
+    var boxes=document.querySelectorAll("db-box.new");
 
     for (var x=0;x<boxes.length;x++)
     {
+        boxes[x].classList.remove("new");
+
+        //apply context menu
         boxes[x].addEventListener("contextmenu",(e)=>{
             selectedBox=e.target;
             boxMenu.popup(remote.getCurrentWindow());
         });
 
+        //apply link navigation
         boxes[x].addEventListener("linkclick",(e)=>{
             shell.openExternal(e.target.link);
         });
 
+        //listen for box update
         boxes[x].addEventListener("updated",(e)=>{
+            //updating entry with id of the updated box
             db.update({id:e.detail.id},e.detail,{});
         });
     }
