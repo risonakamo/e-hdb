@@ -126,7 +126,7 @@ function parseRaw()
                     {
                         if (allTags[ne.tags[y]]==undefined)
                         {
-                            allTags[ne.tags[y]]=0;
+                            allTags[ne.tags[y]]=1;
                         }
 
                         else
@@ -176,7 +176,38 @@ function boxEvents()
         //listen for box update
         boxes[x].addEventListener("updated",(e)=>{
             //updating entry with id of the updated box
-            db.update({id:e.detail.id},e.detail,{});
+            db.update({id:e.detail[0].id},e.detail[0],{});
+
+            var newtags=e.detail[1].newTags;
+            var oldtags=e.detail[1].oldTags;
+
+            for (var y=0;y<newtags.length;y++)
+            {
+                if (allTags[newtags[y]]!=undefined)
+                {
+                    allTags[newtags[y]]++;
+                }
+
+                else
+                {
+                    allTags[newtags[y]]=1;
+                }
+            }
+
+            for (var y=0;y<oldtags.length;y++)
+            {
+                if (allTags[oldtags[y]]!=undefined)
+                {
+                    allTags[oldtags[y]]--;
+
+                    if (allTags[oldtags[y]]<=0)
+                    {
+                        delete allTags[oldtags[y]];
+                    }
+                }
+            }
+
+            db.update({meta:"alltags"},{$set:{"allTags":allTags}},{});
         });
     }
 }

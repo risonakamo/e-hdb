@@ -398,10 +398,11 @@
         dbData.link=newData[3].value;
 
         var ntags=newData[4].value.split(",");
+        var oldTags=this.tags;
         this.tags=ntags;
         dbData.tags=ntags;
 
-        this.dispatchEvent(new CustomEvent("updated",{detail:dbData}));
+        this.dispatchEvent(new CustomEvent("updated",{detail:[dbData,{newTags:ntags,oldTags:oldTags}]}));
         this.closeEdit();
       }
 
