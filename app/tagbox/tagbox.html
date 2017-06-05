@@ -8,6 +8,7 @@
         display: block;
         width: 100%;
         height: 100%;
+        user-select: none;
       }
 
       a
@@ -25,9 +26,20 @@
       #selected-tags .border
       {
         width: 80%;
-        min-height: 40px;
+        height: 40px;
+        line-height: 40px;
         margin: auto;
         border-bottom: 1px solid white;        
+        text-align: center;
+        font-size: 18px;
+        cursor: pointer;
+        transition: color,border-bottom-color .2s,.2s;
+      }
+
+      .border:hover
+      {
+        color: red;
+        border-bottom-color: red !important;
       }
 
       #tag-list
@@ -60,14 +72,22 @@
         background-color: #063da4;
       }
 
-      #type-list
+      .tag-contain
       {
-
+        display: inline-block;
       }
     </style>
 
     <div id="selected-tags">
-      <div class="border"></div>
+      <div class="tag-contain" id="selected-type">
+
+      </div>
+
+      <div class="tag-contain" id="selected-tags-ipoint">
+        
+      </div>
+
+      <div on-click="clearAll" class="border">×</div>
     </div>
 
     <div id="tag-list">
@@ -78,7 +98,6 @@
       <div id="tag-list-ipoint">
 
       </div>
-
     </div>
 
   </template>
@@ -117,7 +136,6 @@
         }
 
         ipoint.innerHTML=html;
-
         this.tagEvents();
       }
 
@@ -134,32 +152,83 @@
         }
 
         ipoint.innerHTML=html;
+        this.typeEvents();
       }
 
       tagEvents()
       {
         var tags=this.$["tag-list-ipoint"].querySelectorAll(".tag");
         var taglist=this.$["tag-list-ipoint"];
-        var selected=this.$["selected-tags"];
+        var selected=this.$["selected-tags-ipoint"];
 
         for (var x=0,l=tags.length;x<l;x++)
         {
-          
           tags[x].addEventListener("click",(e)=>{
             //if already selected and unselecting
             if (e.currentTarget.parentNode==selected)
             {
-              taglist.insertBefore(e.currentTarget,taglist.firstChild);
+              taglist.appendChild(e.currentTarget);
               delete this.currentQuery[e.currentTarget.dataset.name];
               this.dispatchEvent(new CustomEvent("newquery",{detail:this.currentQuery}));
               return;
             }
 
-            selected.insertBefore(e.currentTarget,selected.firstChild);            
+            selected.appendChild(e.currentTarget);
             this.currentQuery[e.currentTarget.dataset.name]=0;
             this.dispatchEvent(new CustomEvent("newquery",{detail:this.currentQuery}));
           });
         }
+      }
+
+      typeEvents()
+      {
+        var selectediPoint=this.$["selected-type"];
+        var unselectediPoint=this.$["type-list"];
+        var types=unselectediPoint.querySelectorAll(".tag");
+
+        for (var x=0,l=types.length;x<l;x++)
+        {
+          types[x].addEventListener("click",(e)=>{
+            //if currently selected type, deselecting
+            if (e.currentTarget.parentNode==selectediPoint)
+            {
+              unselectediPoint.appendChild(e.currentTarget);
+              delete this.currentSelectedType;
+              return;
+            }
+
+            //if there is already type selected, remove it
+            if (this.currentSelectedType!=undefined)
+            {
+              unselectediPoint.appendChild(this.currentSelectedType);
+            }
+
+            this.currentSelectedType=e.currentTarget;
+            selectediPoint.appendChild(this.currentSelectedType);
+          });
+        }
+      }
+
+      clearAll()
+      {
+        var types=this.$["selected-type"].querySelectorAll(".tag");
+        var tags=this.$["selected-tags-ipoint"].querySelectorAll(".tag");
+        var typeipoint=this.$["type-list"];
+        var tagipoint=this.$["tag-list-ipoint"];
+
+        for (var x=0,l=types.length;x<l;x++)
+        {
+          typeipoint.appendChild(types[x]);
+        }
+
+        for (var x=0,l=tags.length;x<l;x++)
+        {
+          tagipoint.appendChild(tags[x]);
+        }
+
+        this.currentQuery={};
+        delete this.currentSelectedType;
+        this.dispatchEvent(new CustomEvent("newquery",{detail:this.currentQuery}));
       }
     }
 

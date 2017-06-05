@@ -262,7 +262,7 @@ function arrayPick(array,size)
     var item=array[pos];
     array[pos]=array[size-1];
     array[size-1]=item;
-    return item;
+    return item;    
 }
 
 //retrive current id from databse or initialise
@@ -294,7 +294,6 @@ function getDbMeta()
         }
         
         allTags=res[0].allTags;
-
         
         tagSearch.tags=allTags;
 
