@@ -279,5 +279,45 @@ function getDbMeta()
 
         var tagSearch=document.querySelector("tag-box");
         tagSearch.tags=allTags;
+
+        tagSearch.addEventListener("newquery",(e)=>{
+            console.log(e.detail);
+
+            var tagQuery=[{meta:{$ne:"id"}},{meta:{$ne:"alltags"}}];
+
+            for (var x in e.detail)
+            {
+                tagQuery.push({tags:x});
+            }
+
+            loadQuery({$and:tagQuery});
+        });
     });
+}
+
+function loadQuery(query)
+{
+    var boxes=document.querySelector(".db-boxes");
+
+    boxes.classList.add("hidden");
+
+    setTimeout(()=>{
+        db.find(query,(err,res)=>{
+            if (res==undefined)
+            {
+                return;    
+            }
+            
+            console.log(res);
+
+            while (boxes.firstChild)
+            {
+                boxes.removeChild(boxes.firstChild);
+            }
+
+            genBoxes(res);
+
+            boxes.classList.remove("hidden");
+        });        
+    },500);
 }

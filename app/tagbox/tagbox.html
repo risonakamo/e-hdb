@@ -19,6 +19,7 @@
       {
         width: 100%;
         min-height: 40px;        
+        padding: 15px;
       }
 
       #selected-tags .border
@@ -65,7 +66,7 @@
     </div>
 
     <div id="tag-list">
-      <a class="tag">med<span>32</span></a>
+      
     </div>
 
   </template>
@@ -81,7 +82,7 @@
       static get properties()
       {
         return {
-          tags: {type:Array,observer:"processTags"}
+          tags: {type:Object,observer:"processTags"}
         };
       }
 
@@ -89,12 +90,22 @@
       {
         super.ready();
 
-        this.tagEvents();
+        this.currentQuery={};
       }
 
       processTags()
       {
-        console.log(this.tags);
+        var ipoint=this.$["tag-list"];
+
+        var html="";
+        for (var x in this.tags)
+        {
+          html+=`<a class="tag" data-name="${x}">${x}<span>${this.tags[x]}</span></a>`;
+        }
+
+        ipoint.innerHTML=html;
+
+        this.tagEvents();
       }
 
       tagEvents()
@@ -107,13 +118,18 @@
         {
           
           tags[x].addEventListener("click",(e)=>{
+            //if already selected and unselecting
             if (e.currentTarget.parentNode==selected)
             {
               taglist.insertBefore(e.currentTarget,taglist.firstChild);
+              delete this.currentQuery[e.currentTarget.dataset.name];
+              this.dispatchEvent(new CustomEvent("newquery",{detail:this.currentQuery}));
               return;
             }
 
-            selected.insertBefore(e.currentTarget,selected.firstChild);
+            selected.insertBefore(e.currentTarget,selected.firstChild);            
+            this.currentQuery[e.currentTarget.dataset.name]=0;
+            this.dispatchEvent(new CustomEvent("newquery",{detail:this.currentQuery}));
           });
         }
       }
