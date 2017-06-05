@@ -57,7 +57,12 @@
 
       .tag:hover
       {
-        background-color: blue;
+        background-color: #063da4;
+      }
+
+      #type-list
+      {
+
       }
     </style>
 
@@ -66,7 +71,14 @@
     </div>
 
     <div id="tag-list">
-      
+      <div id="type-list">
+        <a class="tag">abc<span>2</span></a>
+      </div>
+        
+      <div id="tag-list-ipoint">
+
+      </div>
+
     </div>
 
   </template>
@@ -95,7 +107,7 @@
 
       processTags()
       {
-        var ipoint=this.$["tag-list"];
+        var ipoint=this.$["tag-list-ipoint"];
 
         var html="";
         for (var x in this.tags)
@@ -110,8 +122,8 @@
 
       tagEvents()
       {
-        var tags=this.$["tag-list"].querySelectorAll(".tag");
-        var taglist=this.$["tag-list"];
+        var tags=this.$["tag-list-ipoint"].querySelectorAll(".tag");
+        var taglist=this.$["tag-list-ipoint"];
         var selected=this.$["selected-tags"];
 
         for (var x=0,l=tags.length;x<l;x++)
