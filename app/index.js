@@ -5,6 +5,7 @@ var datastore=require("nedb");
 var db=new datastore({filename:"db.db",autoload:true});
 var curId; //last id for updates
 var allTags; //tags tracker
+var allTypes;
 
 //context menu for db box
 var selectedBox;
@@ -109,6 +110,17 @@ function parseRaw()
                 
                 case 1:
                     ne.type=data[x];
+
+                    if (allTypes[ne.type]==undefined)
+                    {
+                        allTypes[ne.type]=1;
+                    }
+
+                    else
+                    {
+                        allTypes[ne.type]++;
+                    }
+
                     break;
 
                 case 2:
@@ -148,7 +160,7 @@ function parseRaw()
         }
 
         genBoxes(parsedData);
-        db.update({meta:"id"},{$set:{cur:curId}},{});
+        db.update({meta:"id"},{$set:{cur:curId,"allTypes":allTypes}},{});
         db.update({meta:"alltags"},{$set:{"allTags":allTags}},{});
     });
 }
@@ -256,15 +268,21 @@ function arrayPick(array,size)
 //retrive current id from databse or initialise
 function getDbMeta()
 {
+    var tagSearch=document.querySelector("tag-box");
+
     db.find({meta:"id"},(err,res)=>{
         if (res==undefined || res.length==0)
         {
-            db.insert({meta:"id",cur:0});
+            db.insert({meta:"id",cur:0,allTypes:{}});
             curId=0;
+            allTypes={};
             return;
         }
 
         curId=res[0].cur;
+        allTypes=res[0].allTypes;
+
+        tagSearch.types=allTypes;
     });
 
     db.find({meta:"alltags"},(err,res)=>{
@@ -277,12 +295,10 @@ function getDbMeta()
         
         allTags=res[0].allTags;
 
-        var tagSearch=document.querySelector("tag-box");
+        
         tagSearch.tags=allTags;
 
         tagSearch.addEventListener("newquery",(e)=>{
-            console.log(e.detail);
-
             var tagQuery=[{meta:{$ne:"id"}},{meta:{$ne:"alltags"}}];
 
             for (var x in e.detail)

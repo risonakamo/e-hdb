@@ -72,7 +72,7 @@
 
     <div id="tag-list">
       <div id="type-list">
-        <a class="tag">abc<span>2</span></a>
+        
       </div>
         
       <div id="tag-list-ipoint">
@@ -94,7 +94,8 @@
       static get properties()
       {
         return {
-          tags: {type:Object,observer:"processTags"}
+          tags: {type:Object,observer:"processTags"},
+          types: {type:Object,observer:"processTypes"}
         };
       }
 
@@ -118,6 +119,21 @@
         ipoint.innerHTML=html;
 
         this.tagEvents();
+      }
+
+      processTypes()
+      {
+        var ipoint=this.$["type-list"];
+
+        console.log(this.types);
+
+        var html="";
+        for (var x in this.types)
+        {
+          html+=`<a class="tag" data-name="${x}">${x}<span>${this.types[x]}</span></a>`;
+        }
+
+        ipoint.innerHTML=html;
       }
 
       tagEvents()
