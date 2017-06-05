@@ -122,7 +122,7 @@
       {
         super.ready();
 
-        this.currentQuery={};
+        this.currentQuery={tags:{},types:{}};
       }
 
       processTags()
@@ -142,8 +142,6 @@
       processTypes()
       {
         var ipoint=this.$["type-list"];
-
-        console.log(this.types);
 
         var html="";
         for (var x in this.types)
@@ -168,13 +166,13 @@
             if (e.currentTarget.parentNode==selected)
             {
               taglist.appendChild(e.currentTarget);
-              delete this.currentQuery[e.currentTarget.dataset.name];
+              delete this.currentQuery.tags[e.currentTarget.dataset.name];
               this.dispatchEvent(new CustomEvent("newquery",{detail:this.currentQuery}));
               return;
             }
 
             selected.appendChild(e.currentTarget);
-            this.currentQuery[e.currentTarget.dataset.name]=0;
+            this.currentQuery.tags[e.currentTarget.dataset.name]=0;
             this.dispatchEvent(new CustomEvent("newquery",{detail:this.currentQuery}));
           });
         }
@@ -193,7 +191,9 @@
             if (e.currentTarget.parentNode==selectediPoint)
             {
               unselectediPoint.appendChild(e.currentTarget);
+              delete this.currentQuery.types[this.currentSelectedType.dataset.name];
               delete this.currentSelectedType;
+              this.dispatchEvent(new CustomEvent("newquery",{detail:this.currentQuery}));
               return;
             }
 
@@ -201,10 +201,13 @@
             if (this.currentSelectedType!=undefined)
             {
               unselectediPoint.appendChild(this.currentSelectedType);
+              delete this.currentQuery.types[this.currentSelectedType.dataset.name];
             }
 
             this.currentSelectedType=e.currentTarget;
+            this.currentQuery.types[e.currentTarget.dataset.name]=1;
             selectediPoint.appendChild(this.currentSelectedType);
+            this.dispatchEvent(new CustomEvent("newquery",{detail:this.currentQuery}));
           });
         }
       }
@@ -226,7 +229,8 @@
           tagipoint.appendChild(tags[x]);
         }
 
-        this.currentQuery={};
+        this.currentQuery.tags={};
+        this.currentQuery.types={};
         delete this.currentSelectedType;
         this.dispatchEvent(new CustomEvent("newquery",{detail:this.currentQuery}));
       }

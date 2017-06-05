@@ -300,9 +300,14 @@ function getDbMeta()
         tagSearch.addEventListener("newquery",(e)=>{
             var tagQuery=[{meta:{$ne:"id"}},{meta:{$ne:"alltags"}}];
 
-            for (var x in e.detail)
+            for (var x in e.detail.tags)
             {
                 tagQuery.push({tags:x});
+            }
+
+            for (var x in e.detail.types)
+            {
+                console.log(x);
             }
 
             loadQuery({$and:tagQuery});
@@ -323,8 +328,6 @@ function loadQuery(query)
                 return;    
             }
             
-            console.log(res);
-
             while (boxes.firstChild)
             {
                 boxes.removeChild(boxes.firstChild);
