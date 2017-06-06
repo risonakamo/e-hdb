@@ -49,7 +49,6 @@ function main()
     parseRaw();
     loadAll();
     getDbMeta();
-    shuffle();
 }
 
 //setup for op box(es)
