@@ -24,6 +24,23 @@ boxMenu.append(new MenuItem({
     }
 }));
 
+boxMenu.append(new MenuItem({
+    label:"wide",
+    click(){
+        if (selectedBox.wide==1)
+        {
+            selectedBox.wide=0;
+        }
+
+        else
+        {
+            selectedBox.wide=1;
+        }
+
+        db.update({id:selectedBox.id},{$set:{wide:selectedBox.wide}},{});
+    }
+}));
+
 window.onload=main;
 
 function main()
@@ -32,6 +49,7 @@ function main()
     parseRaw();
     loadAll();
     getDbMeta();
+    shuffle();
 }
 
 //setup for op box(es)
@@ -71,11 +89,7 @@ function genBoxes(data)
         newbox.type=data[x].type;
         newbox.link=data[x].link;
         newbox.id=data[x].id;
-
-        if (data[x].wide!=undefined)
-        {
-            newbox.wide=1;
-        }
+        newbox.wide=data[x].wide;
 
         newbox.classList.add("new");
 

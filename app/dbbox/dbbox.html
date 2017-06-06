@@ -73,6 +73,7 @@
       {
         overflow: hidden;
         text-align: center;
+        line-height: 200px;
       }
 
       #img-box img
@@ -84,6 +85,8 @@
       {
         height: auto;
         width: 100%;
+        display: inline-block;
+        vertical-align: middle;        
       }
 
       #info-box #tag-box
@@ -336,6 +339,12 @@
 
       imgWide(e)
       {
+        if (this.wide!=1)
+        {
+          this.$["img-box-img"].classList.remove("wide");
+          return;
+        }
+
         this.$["img-box-img"].classList.add("wide");
       }
 
