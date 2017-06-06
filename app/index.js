@@ -307,7 +307,7 @@ function getDbMeta()
 
             for (var x in e.detail.types)
             {
-                console.log(x);
+                tagQuery.push({type:x});
             }
 
             loadQuery({$and:tagQuery});
