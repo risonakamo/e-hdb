@@ -323,6 +323,11 @@ function getDbMeta()
                 tagQuery.push({type:x});
             }
 
+            if (e.detail.title)
+            {
+                tagQuery.push({name:{$regex:new RegExp(e.detail.title)}});
+            }
+
             loadQuery({$and:tagQuery});
         });
     });

@@ -1,4 +1,4 @@
-<link rel="import" href="../polymer/polymer/polymer.html">
+<link rel="import" href="../polymer/polymer/polymer-element.html">
 
 <dom-module id="tag-box">
   <template>
@@ -15,6 +15,7 @@
       {
         text-decoration: none;
       }
+      
 
       #selected-tags
       {
@@ -38,8 +39,8 @@
 
       .border:hover
       {
-        color: red;
-        border-bottom-color: red !important;
+        color: #ad2b37;
+        border-bottom-color: #ad2b37 !important;
       }
 
       #tag-list
@@ -53,7 +54,7 @@
         display: inline-block;
         color: white;
         font-size: 18px;
-        padding: 5px 10px 3px 10px;
+        padding: 0px 10px 3px 10px;
         box-sizing: border-box;
         overflow: hidden;
         border-radius: 3px;
@@ -68,7 +69,7 @@
         font-size: 23px;
       }
 
-      .tag:hover
+      .tag:hover,.title-button:hover
       {
         background-color: #063da4;
       }
@@ -76,6 +77,73 @@
       .tag-contain
       {
         display: inline-block;
+      }
+
+      #selected-type .tag:hover,#type-list .tag:hover
+      {
+        background-color: #cb8b2d;          
+      }
+
+      #title-filter
+      {
+        width: 390px;
+        height: 33px;
+        margin-left: 15px;
+        overflow: hidden;
+        border-radius: 3px;
+      }      
+
+      .title-text
+      {
+        display: inline-block;
+        vertical-align: top;
+        height: 33px;
+        font-size: 22px;
+        box-sizing: border-box;
+      }
+
+      .title-button
+      {        
+        width: 90px;        
+        text-align: center;
+        cursor: pointer;
+        transition: background-color .2s;
+      }
+
+      #title-input
+      {
+        width: 300px;
+        height: 33px;
+        color: white;
+        font-size: 22px;
+        font-family: "futuraBook";
+        background-color: #211e19;
+        border: none;
+      }
+
+      #title-input:focus
+      {
+        outline: none;
+      }
+
+      #title-filter.collapse #title-input      
+      {
+        width: 0;
+        height: 0;
+        overflow: hidden;
+      }
+
+      #title-filter.collapse .title-on
+      {
+        
+      }
+
+      .title-on
+      {
+        font-size: 18px;
+        background-color: #3397c1;
+        padding: 5px 10px 0 10px;
+        border-radius: 3px;
       }
     </style>
 
@@ -101,6 +169,12 @@
       </div>
     </div>
 
+    <div id="title-filter">
+      <div on-click="titleFilter" class="title-text title-button">title</div>
+      <input type="text" id="title-input">
+      <div class="title-text title-on">[[currentTitle]]</div>
+    </div>
+
   </template>
 
   <script>
@@ -123,6 +197,7 @@
       {
         super.ready();
 
+        this.titleFilterOn=0;
         this.currentQuery={tags:{},types:{}};
       }
 
@@ -233,6 +308,26 @@
         this.currentQuery.tags={};
         this.currentQuery.types={};
         delete this.currentSelectedType;
+        this.dispatchEvent(new CustomEvent("newquery",{detail:this.currentQuery}));
+      }
+
+      titleFilter()
+      {      
+        this.$["title-filter"].classList.toggle("collapse");
+        this.currentTitle=this.$["title-input"].value;
+
+        if (this.titleFilterOn==1)
+        {
+          this.titleFilterOn=0;
+          delete this.currentQuery.title;
+        }
+
+        else
+        {
+          this.titleFilterOn=1;
+          this.currentQuery.title=this.currentTitle;
+        }
+
         this.dispatchEvent(new CustomEvent("newquery",{detail:this.currentQuery}));
       }
     }
