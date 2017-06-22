@@ -240,7 +240,14 @@ function boxEvents()
 //load all boxes
 function loadAll()
 {
-    db.find({$and:[{meta:{$ne:"id"}},{meta:{$ne:"alltags"}}]},(err,res)=>{
+    // db.find({$and:[{meta:{$ne:"id"}},{meta:{$ne:"alltags"}}]},(err,res)=>{
+    //     if (res!=undefined)
+    //     {
+    //         genBoxes(res);
+    //     }
+    // });
+
+    db.find({$and:[{meta:{$ne:"id"}},{meta:{$ne:"alltags"}}]}).sort({id:1}).exec((err,res)=>{
         if (res!=undefined)
         {
             genBoxes(res);
@@ -340,7 +347,23 @@ function loadQuery(query)
     boxes.classList.add("hidden");
 
     setTimeout(()=>{
-        db.find(query,(err,res)=>{
+        // db.find(query,(err,res)=>{
+        //     if (res==undefined)
+        //     {
+        //         return;    
+        //     }
+            
+        //     while (boxes.firstChild)
+        //     {
+        //         boxes.removeChild(boxes.firstChild);
+        //     }
+
+        //     genBoxes(res);
+
+        //     boxes.classList.remove("hidden");
+        // });        
+
+        db.find(query).sort({id:1}).exec((err,res)=>{
             if (res==undefined)
             {
                 return;    
@@ -354,6 +377,6 @@ function loadQuery(query)
             genBoxes(res);
 
             boxes.classList.remove("hidden");
-        });        
+        });
     },500);
 }
