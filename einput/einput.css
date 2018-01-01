@@ -25,13 +25,22 @@ p
     margin: 0;
 }
 
+/*-- wrap top main --*/
 .wrap
 {
     width: 1000px;
     height: 100%;
     margin: auto;
+    font-size: 0;
 }
 
+.wrap > div
+{
+    display: inline-block;
+    vertical-align: top;
+}
+
+/*-- side bar related --*/
 .sidebar
 {
     width: 200px;
@@ -47,9 +56,39 @@ p
     color: white;
     box-sizing: border-box;
     padding: 11px 20px 11px 20px;
+    cursor: pointer;
 }
 
 .sidebar .button:hover
 {
-    background-color: white;
+    background-color: rgba(94,93,89,.2);
+}
+
+.sidebar .button.selected,.sidebar .button.selected:hover
+{
+    background-color: #5e5d59;
+}
+
+/*-- main panels --*/
+.panels
+{
+    position: relative;
+    width: 800px;
+    height: 100%;
+}
+
+.panels .panel
+{
+    position: absolute;
+    display: none;
+    width: 0;
+    height: 0;
+    font-size: 20px;
+}
+
+.panel.show
+{
+    width: 100%;
+    height: auto;
+    display: block;
 }
