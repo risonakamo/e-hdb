@@ -4,19 +4,19 @@ const url=require("url");
 var datastore=require("nedb-core");
 
 var win;
+var _einputwin;
 
-function createWindow()
+function main()
 {
-    win=new BrowserWindow({width:1000,height:720});
-
-    win.loadURL(url.format({
-        pathname:path.join(__dirname,"index.html"),
-        protocol:"file:",
-        slashes:true}));
+    win=new BrowserWindow({width:1000,height:720,useContentSize:true});
+    win.loadURL(`${__dirname}/index.html`);
 
     win.on("closed",(e)=>{
         app.quit();
     });
+
+    _einputwin=new BrowserWindow({width:1000,height:720,useContentSize:true});
+    _einputwin.loadURL(`${__dirname}/einput/einput.html`);
 }
 
-app.on("ready",createWindow);
+app.on("ready",main);
