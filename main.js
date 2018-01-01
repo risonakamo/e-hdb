@@ -3,7 +3,7 @@ const path=require("path");
 const url=require("url");
 var datastore=require("nedb-core");
 
-let win;
+var win;
 
 function createWindow()
 {

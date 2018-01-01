@@ -1,0 +1,55 @@
+@charset "UTF-8";
+
+@font-face
+{
+    font-family: "futuraBook";
+    src: url("../fonts/futuraBook.otf") format("opentype");
+}
+
+html
+{
+    height: 100%;
+}
+
+body
+{
+    height: 100%;
+    margin: 0;
+    background-color: #222222;
+    font-family: "futuraBook";
+    color: white;
+}
+
+p
+{
+    margin: 0;
+}
+
+.wrap
+{
+    width: 1000px;
+    height: 100%;
+    margin: auto;
+}
+
+.sidebar
+{
+    width: 200px;
+    height: 100%;
+    background-color: #191919;
+}
+
+.sidebar .button
+{
+    height: 55px;
+    width: 100%;
+    font-size: 22px;
+    color: white;
+    box-sizing: border-box;
+    padding: 11px 20px 11px 20px;
+}
+
+.sidebar .button:hover
+{
+    background-color: white;
+}
