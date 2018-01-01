@@ -147,16 +147,24 @@ function parseRaw()
                 case 4:
                     ne.tags=data[x].split(",");
 
-                    for (var y=0;y<ne.tags.length;y++)
+                    if (ne.tags[0]=="")
                     {
-                        if (allTags[ne.tags[y]]==undefined)
-                        {
-                            allTags[ne.tags[y]]=1;
-                        }
+                        ne.tags=[];
+                    }
 
-                        else
+                    else
+                    {
+                        for (var y=0;y<ne.tags.length;y++)
                         {
-                            allTags[ne.tags[y]]++;
+                            if (allTags[ne.tags[y]]==undefined)
+                            {
+                                allTags[ne.tags[y]]=1;
+                            }
+
+                            else
+                            {
+                                allTags[ne.tags[y]]++;
+                            }
                         }
                     }
 
