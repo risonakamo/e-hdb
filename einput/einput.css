@@ -83,12 +83,45 @@ p
     display: none;
     width: 0;
     height: 0;
-    font-size: 20px;
+    font-size: 0;
 }
 
 .panel.show
 {
     width: 100%;
-    height: auto;
+    height: 100%;
     display: block;
+}
+
+.panel div
+{
+    display: inline-block;
+    vertical-align: top;
+}
+
+/*-- text input panel --*/
+.text-panel .num-col
+{
+    width: 45px;
+    height: 100%;
+}
+
+.text-panel .text-col
+{
+    display: inline-block;
+    vertical-align: top;
+    width: 755px;
+    height: 100%;
+    resize: none;
+    background-color: #211e19;
+    border-style: none;
+    color: white;
+    font-size: 15px;
+    font-family: "Segoe Ui";
+    box-sizing: border-box;
+}
+
+.text-panel .text-col:focus
+{
+    outline: none;
 }
