@@ -1,22 +1,10 @@
 {
   "name": "e-hdb",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "electron hdb",
   "main": "main.js",
-  "scripts": {
-    "test": "none"
-  },
-  "repository": {
-    "type": "git",
-    "url": "none"
-  },
-  "keywords": [
-    "none"
-  ],
   "author": "rishona",
-  "license": "ISC",
-  "devDependencies": {},
   "dependencies": {
-    "nedb": "^1.8.0"
+    "nedb-core": "^3.0.6"
   }
 }

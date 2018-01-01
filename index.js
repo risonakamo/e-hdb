@@ -1,6 +1,6 @@
 const {remote,shell}=require("electron");
 const {Menu,MenuItem}=remote;
-var datastore=require("nedb");
+var datastore=require("nedb-core");
 
 var db=new datastore({filename:"db.db",autoload:true});
 var curId; //last id for updates
@@ -120,7 +120,7 @@ function parseRaw()
                     ne.id=curId;
                     curId++;
                     break;
-                
+
                 case 1:
                     ne.type=data[x];
 
@@ -282,7 +282,7 @@ function arrayPick(array,size)
     var item=array[pos];
     array[pos]=array[size-1];
     array[size-1]=item;
-    return item;    
+    return item;
 }
 
 //retrive current id from databse or initialise
@@ -312,9 +312,9 @@ function getDbMeta()
             allTags={};
             return;
         }
-        
+
         allTags=res[0].allTags;
-        
+
         tagSearch.tags=allTags;
 
         tagSearch.addEventListener("newquery",(e)=>{
@@ -350,9 +350,9 @@ function loadQuery(query)
         // db.find(query,(err,res)=>{
         //     if (res==undefined)
         //     {
-        //         return;    
+        //         return;
         //     }
-            
+
         //     while (boxes.firstChild)
         //     {
         //         boxes.removeChild(boxes.firstChild);
@@ -361,14 +361,14 @@ function loadQuery(query)
         //     genBoxes(res);
 
         //     boxes.classList.remove("hidden");
-        // });        
+        // });
 
         db.find(query).sort({id:1}).exec((err,res)=>{
             if (res==undefined)
             {
-                return;    
+                return;
             }
-            
+
             while (boxes.firstChild)
             {
                 boxes.removeChild(boxes.firstChild);
