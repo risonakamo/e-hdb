@@ -15,8 +15,8 @@ function main()
         app.quit();
     });
 
-    _einputwin=new BrowserWindow({width:1000,height:720,useContentSize:true});
-    _einputwin.loadURL(`${__dirname}/einput/einput.html`);
+    // _einputwin=new BrowserWindow({width:1000,height:720,useContentSize:true});
+    // _einputwin.loadURL(`${__dirname}/einput/einput.html`);
 }
 
 app.on("ready",main);
